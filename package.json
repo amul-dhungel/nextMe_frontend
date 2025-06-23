@@ -2,7 +2,7 @@
   "name": "reactjs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://amul-dhungel.github.io/nextMe",
+  "homepage": "https://amul-dhungel.github.io/nextMe_frontend",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
