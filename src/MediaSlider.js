@@ -1,31 +1,36 @@
 import React, { useState } from 'react';
-import './styles.css'; // Import your CSS file here
+import './styles.css'; 
 
 const MediaSlider = ({ containerName }) => {
-    const [mediaData, setMediaData] = useState({}); // Store media URLs and metadata
+    const [mediaData, setMediaData] = useState({});
     const [loading, setLoading] = useState(false);
-    const [hasFetched, setHasFetched] = useState(false); // Track if the data has been fetched
-    const [error, setError] = useState(null); // Store any fetch errors
+    const [hasFetched, setHasFetched] = useState(false);
+    const [error, setError] = useState(null);
 
-    // Fetch media when the button is clicked
+    // Function to fetch media blobs
     const fetchMedia = async () => {
-        setLoading(true); // Start loading
-        setError(null); // Clear previous errors
+        setLoading(true);
+        setError(null);
         try {
-            const response = await fetch(`http://127.0.0.1:5000/${containerName}/list_blobs`);
+            const response = await fetch(`https://nextme-backend.onrender.com/${containerName}/list_blobs`);
             const data = await response.json();
             if (typeof data === 'object') {
-                setMediaData(data); // Set the media data (URL and metadata) to state
-                setHasFetched(true);  // Indicate that data has been fetched
+                setMediaData(data);
+                setHasFetched(true);
             } else {
                 throw new Error('Invalid data format');
             }
-            setLoading(false);  // Stop loading
+            setLoading(false);
         } catch (error) {
             console.error('Error fetching media:', error);
             setError('Failed to load media. Please try again later.');
-            setLoading(false);  // Stop loading on error
+            setLoading(false);
         }
+    };
+
+    // Function to open blob URL in a new tab
+    const handleMediaClick = (url) => {
+        window.open(url, '_blank'); // Opens the URL in a new tab
     };
 
     return (
@@ -41,17 +46,15 @@ const MediaSlider = ({ containerName }) => {
             </button>
             </div>
             <div className="media-grid-container">
-            {/* Show error if there's an issue fetching media */}
             {error && <div className="error-message">{error}</div>}
 
-            {/* Render the media grid only if media data is available */}
             {Object.keys(mediaData).length > 0 && !error && (
                 <div className="media-grid">
                     {Object.entries(mediaData).map(([url, metadata], index) => {
                         const desc = metadata.desc || "No description available"; // Fallback to default caption
                         
                         return (
-                            <div key={index} className="media-item">
+                            <div key={index} className="media-item" onClick={() => handleMediaClick(url)}>
                                 {url.endsWith('.mp4') ? (
                                     <video controls className="media-video">
                                         <source src={url} type="video/mp4" />

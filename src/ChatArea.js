@@ -12,7 +12,8 @@ const ChatComponent = () => {
   const [isTyping, setIsTyping] = useState(false); // New flag to control typing state
   const [navTriggered, setNavTriggered] = useState(false); // Track if navbar triggered the change
   const [showSlider, setShowSlider] = useState(false); // To display the slider after the text
-
+  const [navbar_name,setNavBarName ] = useState('')
+ 
   useEffect(() => {
     greetUser();
     console.log("greet");
@@ -52,7 +53,7 @@ I’m also skilled in deploying these with MLOps best practices..`;
     setIsTyping(false);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/chat', {
+      const response = await fetch('https://nextme-backend.onrender.com/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,13 +69,15 @@ I’m also skilled in deploying these with MLOps best practices..`;
       const botMessage = data.response; // Full message from the bot
 
       typeBotMessage(botMessage); // Start typing the message
-
-      if (userText.includes('achievements')) {
-        // Reset showSlider each time "Achievements" is mentioned
-        const sliderResponse = { sender: 'bot', component: <MediaSlider containerName="achievements" /> };
+      console.log({ navbar_name }); // output { navbar_name : 'projects' }
+      if (userText.includes(navbar_name)) {
+      
+        // Reset showSlider each time a specific navbar item is mentioned
+        const sliderResponse = { sender: 'bot', component: <MediaSlider containerName={navbar_name} /> };
         setMessages((prevMessages) => [...prevMessages, sliderResponse]);
         setShowSlider(true);
       }
+      
 
     } catch (error) {
       setMessages((prevMessages) => [
@@ -120,7 +123,8 @@ I’m also skilled in deploying these with MLOps best practices..`;
   return (
     <div className="chat-area">
       {/* Pass setInput and setNavTriggered to TopNav */}
-      <TopNav setInput={setInput} setNavTriggered={setNavTriggered} />
+      <TopNav setInput={setInput} setNavTriggered={setNavTriggered} setNavBarName={(setNavBarName)} />
+      {/* {console.log(navbar_name)} */}
       <div className="chat-history" id="chat-history">
         {messages.map((msg, index) => (
       

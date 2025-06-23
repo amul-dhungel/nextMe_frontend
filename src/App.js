@@ -2,12 +2,13 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import ChatArea from './ChatArea';
 import './styles.css';
+import LiquidBlob from './LiquidBlob';
 function App() {
     return (
         <div className="container">
             <Sidebar />
             <main className="main-content">
-                <ChatArea />
+                <ChatArea/>
             </main>
         </div>
     );
