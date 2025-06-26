@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Message from './Message';  // Assuming you have a Message component for rendering individual messages
 import TopNav from './TopNav';
 import MediaSlider from './MediaSlider'; // Import the MediaSlider component
+import showSlider from './MediaSlider'; // Import the showSlider function if needed
 
 const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
