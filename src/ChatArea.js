@@ -54,7 +54,7 @@ I’m also skilled in deploying these with MLOps best practices..`;
     setIsTyping(false);
 
     try {
-      const response = await fetch('https://nextme-backend.onrender.com/api/chat', {
+      const response = await fetch('https://rajuchoudhary.com.np/app/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,8 +71,8 @@ I’m also skilled in deploying these with MLOps best practices..`;
 
       typeBotMessage(botMessage); // Start typing the message
       console.log({ navbar_name }); // output { navbar_name : 'projects' }
-      if (userText.includes(navbar_name)) {
-      
+      // Only show MediaSlider if the navbar triggered the message
+      if (navTriggered && userText.includes(navbar_name)) {
         // Reset showSlider each time a specific navbar item is mentioned
         const sliderResponse = { sender: 'bot', component: <MediaSlider containerName={navbar_name} /> };
         setMessages((prevMessages) => [...prevMessages, sliderResponse]);
