@@ -12,7 +12,7 @@ const MediaSlider = ({ containerName }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`https://nextme-backend.onrender.com/${containerName}/list_blobs`);
+            const response = await fetch(`https://api.amuldhungel.com.np/${containerName}/list_blobs`);
             const data = await response.json();
             if (typeof data === 'object') {
                 setMediaData(data);

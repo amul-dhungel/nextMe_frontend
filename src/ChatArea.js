@@ -54,7 +54,7 @@ I’m also skilled in deploying these with MLOps best practices..`;
     setIsTyping(false);
 
     try {
-      const response = await fetch('https://rajuchoudhary.com.np/app/api/chat', {
+      const response = await fetch('https://api.amuldhungel.com.np/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
