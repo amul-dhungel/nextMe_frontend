@@ -53,19 +53,54 @@ const MediaSlider = ({ containerName }) => {
                     {Object.entries(mediaData).map(([url, metadata], index) => {
                         const desc = metadata.desc || "No description available"; // Fallback to default caption
                         
-                        return (
-                            <div key={index} className="media-item" onClick={() => handleMediaClick(url)}>
-                                {url.endsWith('.mp4') ? (
-                                    <video controls className="media-video">
-                                        <source src={url} type="video/mp4" />
-                                        Your browser does not support the video tag.
-                                    </video>
-                                ) : (
-                                    <img src={url} alt={`media-${index}`} className="media-img" />
-                                )}
-                                <p className="media-caption">{desc}</p>
-                            </div>
-                        );
+                       return (
+  <div key={index} className="media-item" onClick={() => handleMediaClick(url)}>
+    {url.endsWith('.mp4') ? (
+      <video controls className="media-video">
+        <source src={url} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    ) : url.endsWith('.pdf') ? (
+      // Show a PDF icon or preview button for PDFs
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "180px"
+        }}
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/337/337946.png" // You can use any PDF icon here
+          alt="PDF icon"
+          style={{ width: 48, height: 48, marginBottom: 8, opacity: 0.8 }}
+        />
+        <button
+          style={{
+            background: "#0047ab",
+            color: "white",
+            border: "none",
+            borderRadius: 8,
+            padding: "6px 20px",
+            fontWeight: 600,
+            cursor: "pointer"
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleMediaClick(url);
+          }}
+        >
+          Preview PDF
+        </button>
+      </div>
+    ) : (
+      <img src={url} alt={`media-${index}`} className="media-img" />
+    )}
+    <p className="media-caption">{desc}</p>
+  </div>
+);
+
                     })}
                 </div>
             )}
