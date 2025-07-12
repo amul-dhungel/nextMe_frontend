@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/nextMe_frontend/static/css/main.54315274.css",
-    "main.js": "/nextMe_frontend/static/js/main.87488d53.js",
+    "main.js": "/nextMe_frontend/static/js/main.bf93f97f.js",
     "index.html": "/nextMe_frontend/index.html",
     "main.54315274.css.map": "/nextMe_frontend/static/css/main.54315274.css.map",
-    "main.87488d53.js.map": "/nextMe_frontend/static/js/main.87488d53.js.map"
+    "main.bf93f97f.js.map": "/nextMe_frontend/static/js/main.bf93f97f.js.map"
   },
   "entrypoints": [
     "static/css/main.54315274.css",
-    "static/js/main.87488d53.js"
+    "static/js/main.bf93f97f.js"
   ]
 }
