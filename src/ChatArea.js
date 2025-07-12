@@ -22,9 +22,8 @@ const ChatComponent = () => {
 
   const greetUser = () => {
     const botGreeting = `Hi! I’m the AI consciousness of Amul, with a part of his personality built in.
-I’m a mix of quiet mystery and friendly chatter—if we talk often, you’re in the inner circle!
-As a machine learning expert, I create solutions to real-world problems using tools like machine learning, deep learning, and data visualization.
-I’m also skilled in deploying these with MLOps best practices..`;
+I’m a mix of quiet mystery and friendly chatter—if we talk often. Beside programming, I am interested in physics, mathematics, and Saas.
+I’m here to help you with your questions, so feel free to ask me anything!`;
 
     typeBotMessage(botGreeting);
   };
