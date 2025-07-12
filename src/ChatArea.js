@@ -1,87 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import Message from './Message';  // Assuming you have a Message component for rendering individual messages
+import React, { useState, useEffect, useCallback } from 'react';
+import Message from './Message';
 import TopNav from './TopNav';
-import MediaSlider from './MediaSlider'; // Import the MediaSlider component
-import showSlider from './MediaSlider'; // Import the showSlider function if needed
+import MediaSlider from './MediaSlider';
 
 const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [currentMessage, setCurrentMessage] = useState(''); // For typing animation
-  const [isTyping, setIsTyping] = useState(false); // New flag to control typing state
-  const [navTriggered, setNavTriggered] = useState(false); // Track if navbar triggered the change
-  const [showSlider, setShowSlider] = useState(false); // To display the slider after the text
-  const [navbar_name,setNavBarName ] = useState('')
- 
+  const [currentMessage, setCurrentMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [navTriggered, setNavTriggered] = useState(false);
+  const [navbar_name, setNavBarName] = useState('');
+
+  // Greet user on mount
   useEffect(() => {
     greetUser();
-    console.log("greet");
   }, []);
 
-  const greetUser = () => {
+  const greetUser = useCallback(() => {
     const botGreeting = `Hi! I’m the AI consciousness of Amul, with a part of his personality built in.
-I’m a mix of quiet mystery and friendly chatter—if we talk often. Beside programming, I am interested in physics, mathematics, and Saas.
+I’m a mix of quiet mystery and friendly chatter—if we talk often. Besides programming, I am interested in physics, mathematics, and SaaS.
 I’m here to help you with your questions, so feel free to ask me anything!`;
-
     typeBotMessage(botGreeting);
-  };
+  }, []);
 
-  // This useEffect will trigger the sendMessage function whenever the navTriggered state is true
+  // On navbar trigger, send message
   useEffect(() => {
     if (navTriggered && input) {
       sendMessage();
-      setNavTriggered(false); // Reset navTriggered after sending the message
+      setNavTriggered(false);
     }
+    // eslint-disable-next-line
   }, [input, navTriggered]);
 
-  const sendMessage = () => {
+  const sendMessage = useCallback(() => {
     if (input.trim() === '') return;
-
     const userMessage = { sender: 'user', text: input.trim() };
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
-
     fetchResponse(userMessage.text);
-  };
+    // eslint-disable-next-line
+  }, [input]);
 
   const fetchResponse = async (userText) => {
     setLoading(true);
     setError('');
-    setCurrentMessage(''); // Clear currentMessage before starting typing
+    setCurrentMessage('');
     setIsTyping(false);
 
     try {
       const response = await fetch('https://api.amuldhungel.com.np/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userText }),
       });
 
-      if (!response.ok) {
-        throw new Error('Error connecting to the server');
-      }
+      if (!response.ok) throw new Error('Error connecting to the server');
 
       const data = await response.json();
-      const botMessage = data.response; // Full message from the bot
+      const botMessage = data.response;
 
-      typeBotMessage(botMessage); // Start typing the message
-      console.log({ navbar_name }); // output { navbar_name : 'projects' }
-      // Only show MediaSlider if the navbar triggered the message
+      typeBotMessage(botMessage);
+
+      // Show MediaSlider if nav triggered
       if (navTriggered && userText.includes(navbar_name)) {
-        // Reset showSlider each time a specific navbar item is mentioned
         const sliderResponse = { sender: 'bot', component: <MediaSlider containerName={navbar_name} /> };
-        setMessages((prevMessages) => [...prevMessages, sliderResponse]);
-        setShowSlider(true);
+        setMessages((prev) => [...prev, sliderResponse]);
       }
-      
 
-    } catch (error) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
         { sender: 'bot', text: 'Error connecting to the server.' },
       ]);
     } finally {
@@ -89,49 +79,75 @@ I’m here to help you with your questions, so feel free to ask me anything!`;
     }
   };
 
-  // Simulates typing effect for the bot's response
-  const typeBotMessage = (botMessage) => {
+  // Bullet point auto-render
+  function renderBotMessage(text) {
+    // Try to auto-detect bullet/numbered list
+    const bulletLines = text
+      .split('\n')
+      .filter(line => /^(\s*[-*•]\s+|\d+\.\s+)/.test(line));
+    if (bulletLines.length > 1) {
+      // Bullet/numbered list detected
+      return (
+        <ul style={{ paddingLeft: 22, margin: 0 }}>
+          {bulletLines.map((line, i) => (
+            <li key={i} style={{ marginBottom: 5, fontSize: '15px' }}>
+              {line.replace(/^(\s*[-*•]\s+|\d+\.\s+)/, '')}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    // Regular paragraph
+    return null;
+  }
+
+  // Simulated typing effect for bot response
+  const typeBotMessage = useCallback((botMessage) => {
     let index = 0;
-    setIsTyping(true); // Start typing
-    setCurrentMessage(''); // Clear the previous message
-
-    const typeLetter = () => {
+    setIsTyping(true);
+    setCurrentMessage('');
+    function typeLetter() {
       if (index < botMessage.length) {
-        setCurrentMessage((prev) => prev + botMessage[index]);
+        setCurrentMessage(prev => prev + botMessage[index]);
         index++;
-        setTimeout(typeLetter, 5); // Adjust typing speed here (in ms)
+        setTimeout(typeLetter, 5);
       } else {
-        // Once typing is complete, update the messages array and clear currentMessage
-        setIsTyping(false); // Stop typing
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { sender: 'bot', text: botMessage },
+        setIsTyping(false);
+        setMessages(prev => [
+          ...prev,
+          { sender: 'bot', text: botMessage }
         ]);
-        setCurrentMessage(''); // Clear currentMessage after typing
+        setCurrentMessage('');
       }
-    };
-
-    typeLetter(); // Start the typing process
-  };
+    }
+    typeLetter();
+  }, []);
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
+    if (e.key === 'Enter') sendMessage();
   };
 
   return (
     <div className="chat-area">
-      {/* Pass setInput and setNavTriggered to TopNav */}
-      <TopNav setInput={setInput} setNavTriggered={setNavTriggered} setNavBarName={(setNavBarName)} />
-      {/* {console.log(navbar_name)} */}
+      <TopNav setInput={setInput} setNavTriggered={setNavTriggered} setNavBarName={setNavBarName} />
       <div className="chat-history" id="chat-history">
-        {messages.map((msg, index) => (
-      
-            msg.component || <Message sender={msg.sender} text={msg.text} />
-      
-        ))}
-        {/* Display the message currently being "typed out" only if typing */}
+        {messages.map((msg, idx) => {
+          // If component (like MediaSlider), just render that
+          if (msg.component) {
+            return <React.Fragment key={idx}>{msg.component}</React.Fragment>;
+          }
+          // For bot messages, try bullet/numbered list
+          if (msg.sender === "bot") {
+            const bulletList = renderBotMessage(msg.text);
+            if (bulletList) {
+              return <Message key={idx} sender="bot">{bulletList}</Message>;
+            }
+            // Otherwise, just normal text
+            return <Message key={idx} sender="bot" text={msg.text} />;
+          }
+          // User messages
+          return <Message key={idx} sender={msg.sender} text={msg.text} />;
+        })}
         {isTyping && <Message sender="bot" text={currentMessage} />}
       </div>
 
@@ -139,7 +155,7 @@ I’m here to help you with your questions, so feel free to ask me anything!`;
         <input
           type="text"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={e => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Enter your message..."
         />
