@@ -1,19 +1,14 @@
 {
   "files": {
     "main.css": "/nextMe_frontend/static/css/main.63ca3032.css",
-    "main.js": "/nextMe_frontend/static/js/main.604419f5.js",
+    "main.js": "/nextMe_frontend/static/js/main.a782b611.js",
     "static/media/me.png": "/nextMe_frontend/static/media/me.c6f60f626ee38b07fecd.png",
-    "static/media/autumnAI.png": "/nextMe_frontend/static/media/autumnAI.d9b56199f3259ed86d39.png",
-    "static/media/wolfram.jpg": "/nextMe_frontend/static/media/wolfram.c43830343834e2ac08aa.jpg",
-    "static/media/quantumhack.jpg": "/nextMe_frontend/static/media/quantumhack.9ae7e75d287c067ba74c.jpg",
-    "static/media/nsf1.jfif": "/nextMe_frontend/static/media/nsf1.b4779a5dce040781b058.jfif",
-    "static/media/nsf2.jfif": "/nextMe_frontend/static/media/nsf2.832a84465b413067e77e.jfif",
     "index.html": "/nextMe_frontend/index.html",
     "main.63ca3032.css.map": "/nextMe_frontend/static/css/main.63ca3032.css.map",
-    "main.604419f5.js.map": "/nextMe_frontend/static/js/main.604419f5.js.map"
+    "main.a782b611.js.map": "/nextMe_frontend/static/js/main.a782b611.js.map"
   },
   "entrypoints": [
     "static/css/main.63ca3032.css",
-    "static/js/main.604419f5.js"
+    "static/js/main.a782b611.js"
   ]
 }
