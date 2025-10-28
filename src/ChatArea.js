@@ -46,7 +46,7 @@ I am interested in connecting with people from different fields, so feel free to
     setIsTyping(false);
 
     try {
-      const response = await fetch("https://chairs-travels-bike-fuzzy.trycloudflare.com/api/chat", {
+      const response = await fetch("https://fabrics-reasonably-essentials-saves.trycloudflare.com/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText }),
@@ -82,20 +82,7 @@ I am interested in connecting with people from different fields, so feel free to
 
   // render helpers
   const tryRenderAsList = (text) => {
-    const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
-    const bulletLines = lines.filter((line) => /^(\d+\.\s+|[-*•]\s+)/.test(line));
-    if (bulletLines.length >= 2) {
-      return (
-        <ul style={{ paddingLeft: 22, margin: 0 }}>
-          {bulletLines.map((line, i) => (
-            <li key={i} style={{ marginBottom: 5, fontSize: 15 }}>
-              {line.replace(/^(\d+\.\s+|[-*•]\s+)/, "")}
-            </li>
-          ))}
-        </ul>
-      );
-    }
-    return null;
+    return text;
   };
 
   const typeBotMessage = useCallback((botMessage) => {
