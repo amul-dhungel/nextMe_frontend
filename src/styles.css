@@ -328,7 +328,7 @@ body, html {
 
 .media-grid-container{
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 .media-grid {
     display: grid;
@@ -549,3 +549,94 @@ body, html {
     padding: 0;
   }
 }
+
+/* ===== HERO TOP NAV ONLY ===== */
+/* ====== Split header: 3 tabs left, avatar center, 3 tabs right ====== */
+/* ========== Compact header (no avatar) ========== */
+:root{
+  --hdr-h: 36px;
+  --hdr-bg: #fff;   /* light blue bar */
+}
+
+.hdr{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--hdr-h);
+  background: var(--hdr-bg);
+  box-shadow: 0 2px 8px rgba(16,24,40,.06);
+}
+.hdr--light{ align-items: flex-start; background: var(--hdr-bg); }
+.hdr__inner{
+  max-width: 1400px;
+  height: var(--hdr-h);
+  margin: 0 auto;
+  padding: 0 10px;
+  display: grid;
+  align-items: right;
+  gap: 6px;
+}
+.hdr__grid-2{ grid-template-columns: 1fr auto; }
+
+.hdr__tabs{ display:flex; align-items:right; gap:8px; flex-wrap:wrap; }
+.pill{
+  background:#fff; border:1px solid #e6e9f0; color:#0f172a;
+  font-size:13px; font-weight:700; padding:6px 10px; border-radius:999px;
+  line-height:1; cursor:pointer; transition:background .15s, transform .05s;
+}
+.pill:hover{ background:#f7f8fb; }
+.pill:active{ transform: translateY(1px); }
+.hdr__right{ width: 1px; }
+
+/* ========== Chat messages with bot avatar ========== */
+.msg{
+  display: flex;
+  margin: 10px 0;
+}
+.msg--bot{ align-items: flex-start; }
+.msg--user{
+  justify-content: flex-end;
+}
+
+.msg__avatar{
+  width: 36px; height: 36px; border-radius: 50%;
+  object-fit: cover; margin-right: 10px; flex: 0 0 36px;
+  border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.msg__bubble{
+  max-width: min(72ch, 72%);   /* keeps bubbles readable and same width rules */
+  padding: 14px 16px; border-radius: 14px;
+  box-shadow: 0 3px 8px rgba(0,0,0,.14);
+  font-size: 15px; line-height: 1.5;
+}
+.msg__bubble--bot{
+  background: #3f3f46; color: #fff; border-top-left-radius: 8px;
+}
+.msg__bubble--user{
+  background: #f1c66b; color: #222; border-top-right-radius: 8px;
+}
+
+/* If you want the avatar to slightly overlap the bubble vertically on multi-line: */
+.msg--bot .msg__bubble{ transform: translateY(1px); }
+
+/* Responsive tweaks */
+@media (max-width: 700px){
+  .msg__avatar{ width: 32px; height: 32px; margin-right: 8px; }
+  .msg__bubble{ max-width: 86vw; font-size: 14px; }
+}
+.square-lg{
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: 1px solid var(--btn-br);
+  font-size: 15.5px;
+  font-weight: 700;
+  padding: 10px 16px;
+  line-height: 1;
+  border-radius: 12px;            /* squared (not pill) */
+  box-shadow: 0 1px 0 rgba(16,24,40,.05);
+  cursor: pointer;
+  transition: background .15s ease, transform .05s ease, box-shadow .15s ease;
+}
+.square-lg:hover{ background:#f9fafb; box-shadow:0 2px 0 rgba(16,24,40,.06); }
+.square-lg:active{ transform: translateY(1px); }

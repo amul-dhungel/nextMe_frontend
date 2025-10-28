@@ -1,25 +1,27 @@
-// TopNav.js
-import React from 'react';
+// src/TopNav.js
+import React from "react";
 
-function TopNav({ setInput, setNavTriggered ,setNavBarName}) {
-    const handleClick = (text,navbar_name) => {
-        setInput(text);  // Set the input text based on the navbar item clicked
-        setNavTriggered(true);
-        setNavBarName(navbar_name)
-          // Trigger the sendMessage functionality in ChatComponent
-    };
+function TopNav({ setInput, setNavTriggered, setNavBarName }) {
+  const go = (text, name) => {
+    setInput(text);
+    setNavTriggered(true);
+    setNavBarName(name);
+  };
 
-    return (
-        <nav className="top-nav">
-            <ul>
-                <li><button className="nav-button" onClick={() => handleClick('Tell me about your achievements','achievements')}>Achievements</button></li>
-                <li><button className="nav-button" onClick={() => handleClick('Tell me about your projects', 'projects')}>Projects</button></li>
-                <li><button className="nav-button" onClick={() => handleClick('Tell me about your experiences', 'experiences')}>Experiences</button></li>
-                <li><button className="nav-button" onClick={() => handleClick('Tell me about your volunteering','volunteering')}>Volunteering</button></li>
-                <li><button className="nav-button" onClick={() => handleClick('Tell me about your highlights','highlights')}>Highlights</button></li>
-            </ul>
+  return (
+    <header className="hdr" role="banner">
+      <div className="hdr__light">
+        <nav className="hdr --light" aria-label="Sections">
+          <button className="square-lg" onClick={() => go("Tell me about your achievements","achievements")}>Achievements</button>
+          <button className="square-lg" onClick={() => go("Tell me about your projects","projects")}>Projects</button>
+          <button className="square-lg" onClick={() => go("Tell me about your experiences","experiences")}>Experiences</button>
+          <button className="square-lg" onClick={() => go("Show me your learning certifications","certificates")}>Certificates</button>
+          <button className="square-lg" onClick={() => go("Tell me about your volunteering","volunteering")}>Volunteering</button>
+          <button className="square-lg" onClick={() => go("Tell me your highlights","highlights")}>Highlights</button>
         </nav>
-    );
+      </div>
+    </header>
+  );
 }
 
 export default TopNav;
