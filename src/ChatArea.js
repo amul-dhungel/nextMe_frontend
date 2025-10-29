@@ -46,7 +46,7 @@ I am interested in connecting with people from different fields, so feel free to
     setIsTyping(false);
 
     try {
-      const response = await fetch("https://fabrics-reasonably-essentials-saves.trycloudflare.com/api/chat", {
+      const response = await fetch("https://precious-census-address-pubs.trycloudflare.com/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText }),
